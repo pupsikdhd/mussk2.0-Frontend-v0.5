@@ -1,4 +1,4 @@
-// src/hooks/useAuth.ts
+// src/hooks/useLogin.ts
 
 import { useMutation } from '@tanstack/react-query';
 import { LoginResult } from '@/logic/domain/services/results/Login';

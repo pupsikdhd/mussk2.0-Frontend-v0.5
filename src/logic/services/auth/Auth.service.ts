@@ -11,6 +11,9 @@ import {LoginRequest} from "@/logic/domain/api/request/Login";
 import {LoginResponse} from "@/logic/domain/api/response/Login";
 import {AuthApiService} from "@/logic/infrastructure/auth/auth.api";
 import {AuthInfoStore} from "@/logic/infrastructure/auth/state/authInfo.state";
+import {RegisterResult} from "@/logic/domain/services/results/Register";
+import {RegisterInput} from "@/logic/domain/services/input/Register";
+import {RegisterRequest} from "@/logic/domain/api/request/Register";
 
 
 @injectable()
@@ -22,6 +25,16 @@ export class AuthService {
         @inject(AuthState) private authState: AuthState,
         @inject(AuthInfoStore) private authInfoStore: AuthInfoStore
     ) {}
+
+    async register(input: RegisterInput): Promise<RegisterResult> {
+        const fingerPrint = await this.fingerprintService.get();
+        const fullRequest: RegisterRequest = { ...input, fingerPrint };
+        const response = await this.authApi.register(fullRequest);
+        if(response.status === 400) {
+            return {status:'bad-request'}
+        }
+        return {status:'success', token: response.data.token}
+    }
 
     async logout(): Promise<void> {
         if(!await this.authState.get())

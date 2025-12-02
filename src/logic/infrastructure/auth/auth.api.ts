@@ -3,6 +3,7 @@ import axios, { AxiosResponse, AxiosError } from 'axios';
 import { injectable } from 'tsyringe';
 import {appConfig} from "@/logic/configs/appConfig";
 import {LoginRequest} from "@/logic/domain/api/request/Login";
+import {RegisterRequest} from "@/logic/domain/api/request/Register";
 
 
 @injectable()
@@ -25,6 +26,18 @@ export class AuthApiService {
 
             throw error;
         }
+    }
+
+    async register(request: RegisterRequest): Promise<AxiosResponse> {
+        const response = await axios.post(`${appConfig.backend}/api/account/register`,request,
+            {
+            headers:{
+                'Content-Type': 'application/json'
+            },
+                withCredentials:true,
+                validateStatus:() => true
+        })
+        return response;
     }
 
     async logout(fingerPrint: string): Promise<AxiosResponse> {

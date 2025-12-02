@@ -1,4 +1,4 @@
-// src/hooks/useAuth.ts
+// src/hooks/useLogout.ts
 
 import { useMutation } from '@tanstack/react-query';
 import {container} from "@/logic/di/container";
