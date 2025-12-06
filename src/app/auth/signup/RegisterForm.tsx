@@ -16,7 +16,6 @@ import {Loader} from "@/components/ui/loader";
 
 
 
-// Улучшенная функция для показа уведомлений
 const showToast = (message: string, type: 'error' | 'success') => {
     toast[type](message, {
         position: "bottom-right",
